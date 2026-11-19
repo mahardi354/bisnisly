@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Alamat tidak ditemukan – Bisnisly</title>
+<meta name="theme-color" content="#0F2236">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F2236;--ink-2:#2B3F55;--muted:#5B6B7C;--paper:#F6F8FB;--line:#DDE5EE;--blue:#2F6BFF;--blue-d:#1F4FD1}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;flex-direction:column;font-family:'Geologica',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:radial-gradient(800px 340px at 85% -10%,#DCE7FF 0%,transparent 70%),var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px;width:100%}
+header{height:64px;display:flex;align-items:center}
+.logo{font-weight:600;font-size:1.35rem;letter-spacing:-.03em}
+.logo b{color:var(--blue);font-weight:600}
+main{flex:1;display:flex;align-items:center;padding:30px 0 60px}
+h1{font-weight:300;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;letter-spacing:-.02em}
+h1 span{display:block;color:var(--muted)}
+p.sub{margin:18px 0 28px;color:var(--ink-2);max-width:520px}
+.addr{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-weight:600;margin-bottom:6px;word-break:break-all}
+.find{background:var(--ink);border-radius:20px;padding:22px;box-shadow:0 24px 50px -24px rgba(15,34,54,.55)}
+.find label{display:block;color:#9FB2C6;font-size:.85rem;margin-bottom:10px}
+.bar{display:flex;align-items:center;background:#fff;border-radius:12px;padding:6px 6px 6px 16px;gap:4px;flex-wrap:wrap}
+.bar input{flex:1;min-width:110px;border:0;outline:0;font:inherit;font-weight:600;font-size:1.05rem;color:var(--ink);text-align:left;background:transparent;padding:10px 0}
+.bar .dom{font-weight:300;font-size:1.05rem;color:var(--muted);padding-right:0}
+.btn{display:inline-block;background:var(--blue);color:#fff;font:inherit;font-weight:600;padding:12px 24px;border-radius:999px;border:0;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--blue-d)}
+.find small{display:block;margin-top:12px;color:#9FB2C6;font-size:.82rem}
+.err{color:#FFB4B4!important}
+.links{margin-top:26px;font-size:.95rem;color:var(--muted)}
+.links a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+footer{padding:24px 0 34px;color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="https://bisnisly.com" class="logo" aria-label="Bisnisly beranda">bisnis<b>ly</b></a></div></header>
+
+<main>
+  <div class="wrap">
+    <div class="addr" id="addr" hidden></div>
+    <h1 id="title">Alamat ini belum<span>ada websitenya.</span></h1>
+    <p class="sub" id="sub">Mungkin ada salah ketik, atau website usaha ini belum ditayangkan. Coba cek ejaan alamatnya, atau cari lagi di bawah.</p>
+
+    <form class="find" id="f" novalidate>
+      <label for="nama">Cari alamat website usaha:</label>
+      <div class="bar">
+        <span class="dom">bisnisly.com/</span>
+        <input id="nama" type="text" placeholder="namausaha" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Nama alamat website">
+        <button class="btn" type="submit">Buka</button>
+      </div>
+      <small id="hint">Cukup huruf, angka, dan tanda hubung. Contoh: dapurbunda</small>
+    </form>
+
+    <p class="links">Pemilik usaha atau mitra? Hubungi pembuat websitemu, atau <a href="https://bisnisly.com/#kontak">hubungi pengelola Bisnisly</a>.</p>
+  </div>
+</main>
+
+<footer><div class="wrap">© <span id="yr">2026</span> Bisnisly. Alamat bersama untuk website usaha.</div></footer>
+
+<script>
+(function(){
+  var addr=document.getElementById('addr');
+  var seg=location.pathname.split('/').filter(Boolean)[0];
+  if(seg){
+    var shown=location.hostname+'/'+seg+'/';
+    addr.textContent=shown;addr.hidden=false;
+    document.title=shown+' tidak ditemukan – Bisnisly';
+  }else{
+    document.getElementById('title').innerHTML='Halaman ini tidak<span>ditemukan.</span>';
+    document.getElementById('sub').textContent='Link yang kamu buka mungkin salah atau sudah dipindahkan. Kembali ke beranda, atau cari website usaha di bawah.';
+  }
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  var f=document.getElementById('f'),input=document.getElementById('nama'),hint=document.getElementById('hint'),base=hint.textContent;
+  input.addEventListener('input',function(){
+    var c=input.value.toLowerCase().replace(/[^a-z0-9-]/g,'');
+    if(c!==input.value)input.value=c;
+    hint.textContent=base;hint.classList.remove('err');
+  });
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var s=input.value.replace(/^-+|-+$/g,'');
+    if(!s){hint.textContent='Ketik nama alamat dulu, misalnya: dapurbunda';hint.classList.add('err');input.focus();return;}
+    location.href='https://bisnisly.com/'+s+'/';
+  });
+})();
+</script>
+</body>
+</html>
